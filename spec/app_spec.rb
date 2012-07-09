@@ -13,12 +13,17 @@ end
 describe "App" do
   include Rack::Test::Methods
   
-  it "should return all monitors json" do
+  xit "should be ok" do
+    get "/"
+    response.should be_ok
+  end
+  
+  xit "should return all monitors json" do
     get "/monitors"
     puts last_response.body
   end
 
-  it "should return json for a monitor" do
+  xit "should return json for a monitor" do
     get "/monitors/0"
     puts last_response.body
   end
