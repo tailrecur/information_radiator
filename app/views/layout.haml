@@ -1,0 +1,17 @@
+!!! 5 
+%html
+  %head
+    %script{:type => "text/javascript", :src  => "lib/jquery-1.7.2.min.js"}
+    %script{:type => "text/javascript", :src  => "lib/underscore-min.js"}
+    %script{:type => "text/javascript", :src  => "lib/highcharts.js"}
+    %script{:type => "text/javascript", :src  => "namespace.js"}
+    %script{:type => "text/javascript", :src  => "goRenderer.js"}
+    %script{:type => "text/javascript", :src  => "monitor.js"}
+    %script{:type => "text/javascript", :src  => "radiator.js"}
+    
+    :css
+      body {
+        margin: 0px;
+      }
+  %body
+    = yield

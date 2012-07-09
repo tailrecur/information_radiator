@@ -1,0 +1,10 @@
+---
+go:
+  url: http://go.server
+  username: foo
+  password: bar
+  refresh_rate: 10
+  pipelines:
+    inclusions: [".*commit.*", "dev"]
+    exclusions: [".*temp.*"]
+      

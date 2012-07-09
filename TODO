@@ -1,0 +1,12 @@
+- Go
+- Scrape 
+
+Nagios - Url with Xpath selection
+- http://nagios.server/nagios/cgi-bin//status.cgi?hostgroup=production&style=overview
+
+Mingle
+- Mechanize login with URL monitor
+
+Ganglia
+- URL monitor with Basic auth
+
