@@ -11,9 +11,9 @@ body {
 
 div.pipeline {
   float: left;
-  width: 25%;
+  width: 24.75%;
   color: black;
-  border: 2px solid black;
+  border: 3px solid black;
   border-radius: 10px;
   text-align: center;
   vertical-align: middle;
