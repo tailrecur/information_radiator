@@ -8,7 +8,7 @@
 
     self.start_polling = function() {
       setInterval(function() {
-        $.getJSON('/monitors/' + self.options.id, function(data) {
+        Radiator.MonitorStore.findById(self.options.id, function(data) {
           _(data).each(function(pipeline) {
             _(self.pipelines()).each(function(existing_pipeline) {
               if(existing_pipeline.name() == pipeline.name) {
@@ -21,7 +21,7 @@
     };
 
     self.start = function() {
-      $.getJSON('/monitors/' + self.options.id, function(data) {
+      Radiator.MonitorStore.findById(self.options.id, function(data) {
         _(data).each(function(pipeline) {
           self.pipelines.push(new Radiator.Pipeline(pipeline));
         });
