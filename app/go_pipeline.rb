@@ -20,7 +20,7 @@ class Pipeline
   end
   
   def to_json options={}
-    {name: @name, status: status, activity: activity}.to_json
+    {name: name.gsub("_"," ").gsub("-"," "), status: status, activity: activity}.to_json
   end
   
   def == other

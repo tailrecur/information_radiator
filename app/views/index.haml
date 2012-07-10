@@ -1,6 +1,7 @@
 #screen
   %div{"data-bind" => "foreach: monitors"}
     %div{"data-bind" => "foreach: pipelines"}
-      %div{"data-bind" => "text: name"}
-      %div{"data-bind" => "text: buildStatus"}
+      #outer.pipeline
+        #middle{"data-bind" => "attr: { class: buildStatus }"}
+          #inner{:class => "clear", "data-bind" => "text: name"}
 
