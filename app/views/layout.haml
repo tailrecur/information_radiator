@@ -1,17 +1,15 @@
 !!! 5 
 %html
   %head
+    %link{:rel => "stylesheet", :href => "radiator.css"}
     %script{:type => "text/javascript", :src  => "lib/jquery-1.7.2.min.js"}
     %script{:type => "text/javascript", :src  => "lib/underscore-min.js"}
-    %script{:type => "text/javascript", :src  => "lib/highcharts.js"}
+    %script{:type => "text/javascript", :src  => "lib/knockout-2.1.0.js"}
     %script{:type => "text/javascript", :src  => "namespace.js"}
-    %script{:type => "text/javascript", :src  => "goRenderer.js"}
+    %script{:type => "text/javascript", :src  => "pipeline.js"}
     %script{:type => "text/javascript", :src  => "monitor.js"}
     %script{:type => "text/javascript", :src  => "radiator.js"}
-    
-    :css
-      body {
-        margin: 0px;
-      }
+    %script{:type => "text/javascript", :src  => "screen.js"}
+
   %body
     = yield

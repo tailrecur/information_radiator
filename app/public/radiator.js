@@ -56,6 +56,6 @@
         self.startMonitors();
       });
     });
-  })();
+  });
   
 })(jQuery);

@@ -1,33 +1,37 @@
 (function ($) {
   Radiator.Monitor = function(options) {
-    var self = {};
-    
+    var self = this;
+
     self.options = options;
-    self.renderer = Radiator.RendererFactory.create(options.type, options.id);
-    
-    self.start = function() {
+    self.type = ko.observable("foo");
+    self.pipelines = ko.observableArray();
+
+    self.start_polling = function() {
       setInterval(function() {
         $.getJSON('/monitors/' + self.options.id, function(data) {
-          self.renderer.render(data);
+          _(data).each(function(pipeline) {
+            _(self.pipelines()).each(function(existing_pipeline) {
+              if(existing_pipeline.name() == pipeline.name) {
+                existing_pipeline.refresh(pipeline);
+              }
+            });
+          });
         });
-      }, parseInt(options.refresh_rate) * 1000)
+      }, parseInt(self.options.refresh_rate) * 1000)
     };
-    
+
+    self.start = function() {
+      $.getJSON('/monitors/' + self.options.id, function(data) {
+        _(data).each(function(pipeline) {
+          self.pipelines.push(new Radiator.Pipeline(pipeline));
+        });
+      });
+      self.start_polling();
+    };
+
     return {
       start: self.start,
+      pipelines: self.pipelines,
     }
   };
 })(jQuery);
-
-Radiator.RendererFactory = (function() {
-  var self = {};
-  self.create = function(type, monitor_id) {
-    if(type == "go") {
-      return new Radiator.GoRenderer(monitor_id);
-    }
-  }
-  
-  return {
-    create: self.create,
-  }
-})();

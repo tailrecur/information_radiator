@@ -1,1 +1,6 @@
-#container
+#screen
+  %div{"data-bind" => "foreach: monitors"}
+    %div{"data-bind" => "foreach: pipelines"}
+      %div{"data-bind" => "text: name"}
+      %div{"data-bind" => "text: buildStatus"}
+
