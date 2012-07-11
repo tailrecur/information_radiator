@@ -1,6 +1,6 @@
 require 'json'
 
-class Pipeline 
+class GoPipeline 
   def initialize name
     @name = name
     @stages = []
@@ -24,16 +24,16 @@ class Pipeline
   end
   
   def == other
-    other.is_a?(Pipeline) and self.name == other.name
+    other.is_a?(GoPipeline) and self.name == other.name
   end
     
 end
 
-class Stage
+class GoStage
   def initialize name, status, activity
     @pipeline_name, @name = name.split(" :: ")
     @status = status
     @activity = activity
   end
-  attr_reader :pipeline_name, :status, :activity
+  attr_reader :pipeline_name, :name, :status, :activity
 end

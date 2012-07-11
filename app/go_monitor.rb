@@ -6,7 +6,7 @@ class GoMonitor
   def initialize hashie
     @http_handler = HttpHandler.new(go_base_url(hashie.url))
     @http_handler.auth(hashie.username, hashie.password) if hashie.username && hashie.password
-    @pipelines = hashie.pipelines.inclusions.map{|name| Pipeline.new name }
+    @pipelines = hashie.pipelines.inclusions.map{|name| GoPipeline.new name }
     @refresh_rate = hashie.refresh_rate || 15
   end
   attr_reader :pipelines, :refresh_rate
@@ -24,7 +24,7 @@ class GoMonitor
   private
   
   def parse_data projects
-    stages = projects.css("Project").find_all {|p| p["name"].split("::").size == 2 }.map {|p| Stage.new(p["name"], p["lastBuildStatus"], p["activity"])}
+    stages = projects.css("Project").find_all {|p| p["name"].split("::").size == 2 }.map {|p| GoStage.new(p["name"], p["lastBuildStatus"], p["activity"])}
     stages.each do |stage|
       pipeline = pipelines.find {|p| p.name == stage.pipeline_name }
       pipeline.stages << stage if pipeline
