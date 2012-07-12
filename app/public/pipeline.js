@@ -12,7 +12,7 @@ Radiator.Pipeline = function(options) {
   self.status = ko.observable(options.status);
   self.activity = ko.observable(options.activity);
   self.displayName = ko.computed(function() {
-     return self.name();
+     return self.name().replace(/_/g," ");
   });
 
   self.buildStatus = ko.computed(function() {

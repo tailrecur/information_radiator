@@ -2,16 +2,16 @@
   Radiator.MonitorStore = (function() {
     var self = this;
 
-    self.all = function(callback) {
+    self.all = function(successCallback, errorCallback) {
       $.getJSON('/monitors', function(data) {
-        callback(data);
-      });
+        successCallback(data);
+      }).error(errorCallback);
     }
 
-    self.findById = function(id, callback) {
+    self.findById = function(id, successCallback, errorCallback) {
       $.getJSON('/monitors/' + id, function(data) {
-        callback(data);
-      });
+        successCallback(data);
+      }).error(errorCallback);
     }
 
     return {
