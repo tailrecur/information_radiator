@@ -52,5 +52,16 @@ describe GoMonitor do
         stage.activity.should == "Sleeping"
       end
     end
+    
+    context "when go server is down" do
+      it "should return error" do
+        http_handler = mock()
+        HttpHandler.should_receive(:new).with("http://go.server/go").and_return(http_handler)
+        http_handler.should_receive(:auth).never
+        http_handler.should_receive(:retrieve).with("/cctray.xml").and_raise(Exception.new("Connection Error"))
+        error = subject.refresh_data
+        error[:message].should == "Connection Error"
+      end
+    end
   end
 end

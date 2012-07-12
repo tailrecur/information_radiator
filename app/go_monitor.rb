@@ -12,11 +12,11 @@ class GoMonitor
   attr_reader :refresh_rate
 
   def refresh_data
-    # begin
+    begin
       parse_data(Nokogiri::XML(@http_handler.retrieve("/cctray.xml")))
-    # rescue => e
-      
-    # end
+    rescue Exception => e
+      { message: e.message }
+    end
   end
   
   def type
