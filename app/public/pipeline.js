@@ -11,10 +11,14 @@ Radiator.Pipeline = function(options) {
   self.name = ko.observable(options.name);
   self.status = ko.observable(options.status);
   self.activity = ko.observable(options.activity);
+  self.displayName = ko.computed(function() {
+     return self.name();
+  });
+
   self.buildStatus = ko.computed(function() {
      return self.status() + "-" + self.activity();
   });
-  
+
   self.refresh = function(data) {
     self.status(data.status);
     self.activity(data.activity);

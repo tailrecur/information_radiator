@@ -14,8 +14,6 @@ XML
 describe GoMonitor do
   subject { GoMonitor.new(Hashie::Mash.new(url: "http://go.server", pipelines: {inclusions: ["test_pipeline", "test2_pipeline"]})) }
 
-  its(:pipelines) { should == [GoPipeline.new("test_pipeline"), GoPipeline.new("test2_pipeline")] }
-  
   describe "#refresh_rate" do
     context "when not specified" do
       its(:refresh_rate) { should == 15 }

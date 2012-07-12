@@ -1,7 +1,7 @@
 #screen
   %div{"data-bind" => "foreach: monitors"}
     %div{"data-bind" => "foreach: pipelines"}
-      #outer.pipeline
+      #outer.pipeline{"data-bind" => "css: { broken: status() === 'failed' }"}
         #middle{"data-bind" => "attr: { class: buildStatus }"}
-          #inner{:class => "clear", "data-bind" => "text: name"}
+          #inner{:class => "clear", "data-bind" => "text: displayName"}
 

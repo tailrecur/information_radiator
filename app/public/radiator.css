@@ -5,11 +5,11 @@ html,body {
 body {
   margin: 0px;
   font-family: Nevis,Verdana,Helvetica,sans-serif;
-  font-size: 42px;
-  font-weight: bold;
 }
 
 div.pipeline {
+  font-size: 46px;
+  font-weight: bold;
   float: left;
   width: 24.75%;
   color: black;
@@ -18,6 +18,10 @@ div.pipeline {
   text-align: center;
   vertical-align: middle;
   margin: 2px;
+}
+
+#outer.pipeline.broken {
+  height: 400px;
 }
 
 #outer {
@@ -44,7 +48,7 @@ div.pipeline {
 }
 
 .failed-sleeping {
-  background-color: red;
+  background-color: #C11B17;
 }
 
 .failed-building {

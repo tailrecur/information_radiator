@@ -1,20 +1,22 @@
 require 'nokogiri'
 require 'http_handler'
-require 'go_pipeline'
+require 'go_pipeline_filter'
 
 class GoMonitor
   def initialize hashie
     @http_handler = HttpHandler.new(go_base_url(hashie.url))
     @http_handler.auth(hashie.username, hashie.password) if hashie.username && hashie.password
-    @pipelines = hashie.pipelines.inclusions.map{|name| GoPipeline.new name }
+    @pipeline_filter = GoPipelineFilter.new(hashie.pipelines.inclusions || [], hashie.pipelines.exclusions || [])
     @refresh_rate = hashie.refresh_rate || 15
   end
-  attr_reader :pipelines, :refresh_rate
+  attr_reader :refresh_rate
 
   def refresh_data
-    pipelines.each(&:clear!)
-    parse_data(Nokogiri::XML(@http_handler.retrieve("/cctray.xml")))
-    return pipelines
+    # begin
+      parse_data(Nokogiri::XML(@http_handler.retrieve("/cctray.xml")))
+    # rescue => e
+      
+    # end
   end
   
   def type
@@ -25,10 +27,7 @@ class GoMonitor
   
   def parse_data projects
     stages = projects.css("Project").find_all {|p| p["name"].split("::").size == 2 }.map {|p| GoStage.new(p["name"], p["lastBuildStatus"], p["activity"])}
-    stages.each do |stage|
-      pipeline = pipelines.find {|p| p.name == stage.pipeline_name }
-      pipeline.stages << stage if pipeline
-    end
+    @pipeline_filter.apply(stages)
   end
     
   def go_base_url url
