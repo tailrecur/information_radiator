@@ -27,6 +27,7 @@ describe GoMonitor do
   end
   
   describe "#refresh_data" do
+    before { GoPipeline.any_instance.stub(:refresh_data) }
     context "when basic auth is not specified" do
       it "should retrieve xml" do
         http_handler = mock()

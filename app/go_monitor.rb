@@ -13,7 +13,8 @@ class GoMonitor
 
   def refresh_data
     begin
-      parse_data(Nokogiri::XML(@http_handler.retrieve("/cctray.xml")))
+      pipelines = filter_pipelines(Nokogiri::XML(@http_handler.retrieve("/cctray.xml")))
+      pipelines.each(&:refresh_data)
     rescue Exception => e
       puts e.message
       puts e.backtrace.join("\n")
@@ -27,7 +28,7 @@ class GoMonitor
   
   private
   
-  def parse_data projects
+  def filter_pipelines projects
     stages = projects.css("Project").find_all {|p| p["name"].split("::").size == 2 }.map {|attrs| GoStageBuilder.create(attrs)}
     @pipeline_filter.apply(stages)
   end
