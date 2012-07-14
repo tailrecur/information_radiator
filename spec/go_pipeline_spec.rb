@@ -34,7 +34,7 @@ describe "GoPipeline" do
     its(:status) { should == "failed" }
     its(:activity) { should == "sleeping" }
     its(:failed_stage) { should == failed_stage }
-    its(:to_json) { should == {name: "test_pipeline", status: "failed", activity: "sleeping", build_breakers: ["Tom", "Dickie Bird", "rambo", "Deeldon Lemauza"] }.to_json }
+    its(:to_json) { should == {name: "test_pipeline", status: "failed", activity: "sleeping", buildBreakers: ["Tom", "Dickie Bird", "rambo", "Deeldon Lemauza"] }.to_json }
   end
   
   context "when build is red and building" do
@@ -44,7 +44,7 @@ describe "GoPipeline" do
 
     its(:status) { should == "failed" }
     its(:activity) { should == "building" }
-    its(:to_json) { should == {name: "test_pipeline", status: "failed", activity: "building", build_breakers: ["Tom", "Dickie Bird", "rambo", "Deeldon Lemauza"] }.to_json }
+    its(:to_json) { should == {name: "test_pipeline", status: "failed", activity: "building", buildBreakers: ["Tom", "Dickie Bird", "rambo", "Deeldon Lemauza"] }.to_json }
   end
 
 
