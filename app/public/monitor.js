@@ -5,9 +5,6 @@
     self.options = options;
     self.type = ko.observable("foo");
     self.pipelines = ko.observableArray();
-    self.errorHandler = function(errorMessage) {
-      alert(errorMessage);
-    }
 
     self.start_polling = function() {
       setInterval(function() {
@@ -19,7 +16,7 @@
               }
             });
           });
-        }, self.errorHandler);
+        }, screen.showError);
       }, parseInt(self.options.refresh_rate) * 1000)
     };
 
@@ -28,7 +25,7 @@
         _(data).each(function(pipeline) {
           self.pipelines.push(new Radiator.Pipeline(pipeline));
         });
-      }, self.errorHandler);
+      }, screen.showError);
       self.start_polling();
     };
 

@@ -1,17 +1,21 @@
 (function ($) {
   Radiator.MonitorStore = (function() {
     var self = this;
+    
+    self.jsonCall = function(url, successCallback, errorCallback) {
+      $.getJSON(url, function(data) {
+        successCallback(data);
+      }).error(function(jqXHR) {
+        errorCallback($.parseJSON(jqXHR.responseText));
+      });
+    }
 
     self.all = function(successCallback, errorCallback) {
-      $.getJSON('/monitors', function(data) {
-        successCallback(data);
-      }).error(errorCallback);
+      jsonCall("/monitors", successCallback, errorCallback);
     }
 
     self.findById = function(id, successCallback, errorCallback) {
-      $.getJSON('/monitors/' + id, function(data) {
-        successCallback(data);
-      }).error(errorCallback);
+      jsonCall('/monitors/' + id, successCallback, errorCallback);
     }
 
     return {

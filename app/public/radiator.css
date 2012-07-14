@@ -58,3 +58,13 @@ div.pipeline {
 .clear {
   clear: both;
 }
+
+.error-message {
+  width: 100%;
+  background: red;
+  text-align: center;
+  min-height: 50px;
+  vertical-align: center;
+  font-size: 46px;
+  font-weight: bold;
+}

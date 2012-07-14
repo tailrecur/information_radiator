@@ -59,8 +59,7 @@ describe GoMonitor do
         HttpHandler.should_receive(:new).with("http://go.server/go").and_return(http_handler)
         http_handler.should_receive(:auth).never
         http_handler.should_receive(:retrieve).with("/cctray.xml").and_raise(Exception.new("Connection Error"))
-        error = subject.refresh_data
-        error[:message].should == "Connection Error"
+        expect { subject.refresh_data }.to raise_error("Cannot connect to GO server")
       end
     end
   end

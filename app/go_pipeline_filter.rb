@@ -16,10 +16,9 @@ class GoPipelineFilter
   
   def filter stages
     filtered_names = stages.map(&:pipeline_name).uniq
-    
     filtered_names.reject! { |name| @exclusions.include?(name) }
     filtered_names.select! { |name| @inclusions.include?(name) } unless @inclusions.size == 0
-   filtered_names.map{|name| GoPipeline.new name }
+    filtered_names.map{|name| GoPipeline.new name }
   end
   
   def populate pipelines, stages

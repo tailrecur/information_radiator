@@ -18,5 +18,9 @@ get "/monitors" do
 end
 
 get "/monitors/:id" do |id|
-  radiator.monitors[id.to_i].refresh_data.to_json
+  begin
+    radiator.monitors[id.to_i].refresh_data.to_json
+  rescue Exception => e
+    [ 500, {message: e.message}.to_json ]
+  end
 end
