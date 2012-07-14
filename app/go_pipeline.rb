@@ -22,8 +22,12 @@ class GoPipeline
     stages.find(&:failed?)
   end
   
+  def label
+    stages.first.label
+  end
+  
   def to_json options={}
-    pipeline = {name: name, status: status, activity: activity}
+    pipeline = {name: name, status: status, activity: activity, label: label}
     if failed_stage
       pipeline[:triggerer] = stages.map(&:triggerer).uniq.compact.first
       pipeline[:buildBreakers] = failed_stage.authors
@@ -58,7 +62,7 @@ end
 class GoStage
   def initialize opts
     @opts = opts
-    @id, @name, @pipeline_name = opts[:id], opts[:name], opts[:pipeline_name]
+    @id, @name, @pipeline_name, @label = opts[:id], opts[:name], opts[:pipeline_name], opts[:label]
   end
   
   def failed?
@@ -80,5 +84,5 @@ class GoStage
   extend Forwardable
   def_delegators :@entry, :triggerer, :authors
   
-  attr_reader :pipeline_name, :name, :id
+  attr_reader :pipeline_name, :name, :id, :label
 end

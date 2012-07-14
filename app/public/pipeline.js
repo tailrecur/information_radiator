@@ -3,6 +3,7 @@ Radiator.Pipeline = function(options) {
   
   self.name = ko.observable(options.name);
   self.status = ko.observable(options.status);
+  self.label = ko.observable(options.label);
   self.triggerer = ko.observable(options.triggerer);
   self.activity = ko.observable(options.activity);
   self.buildBreakers = ko.observableArray(options.buildBreakers);

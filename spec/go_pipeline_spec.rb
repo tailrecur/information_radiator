@@ -8,7 +8,7 @@ describe "GoPipeline" do
   
   def stage(opts)
     name = opts[:name] || "stage3"
-    default_opts = {id: "test_pipeline/18/#{name}/1", name: name, pipeline_name: "test_pipeline", status: "Success", activity: "Sleeping" }
+    default_opts = {id: "test_pipeline/18/#{name}/1", name: name, pipeline_name: "test_pipeline", status: "Success", activity: "Sleeping", label: "P2" }
     GoStage.new(default_opts.merge(opts))
   end
 
@@ -24,7 +24,7 @@ describe "GoPipeline" do
     its(:status) { should == "passed" }
     its(:activity) { should == "sleeping" }
     its(:failed_stage) { should be_nil }
-    its(:to_json) { should == {name: "test_pipeline", status: "passed", activity: "sleeping" }.to_json }
+    its(:to_json) { should == {name: "test_pipeline", status: "passed", activity: "sleeping", label: "P2" }.to_json }
   end
   
   context "when build is red" do
@@ -37,7 +37,7 @@ describe "GoPipeline" do
       its(:status) { should == "failed" }
       its(:activity) { should == "sleeping" }
       its(:failed_stage) { should == failed_stage }
-      its(:to_json) { should == {name: "test_pipeline", status: "failed", activity: "sleeping", triggerer: nil, buildBreakers: ["Tom", "Dickie Bird", "rambo", "Deeldon Lemauza"] }.to_json }
+      its(:to_json) { should == {name: "test_pipeline", status: "failed", activity: "sleeping", label: "P2", triggerer: nil, buildBreakers: ["Tom", "Dickie Bird", "rambo", "Deeldon Lemauza"] }.to_json }
     end
     
     context "when building and triggered" do
@@ -46,7 +46,7 @@ describe "GoPipeline" do
 
       its(:status) { should == "failed" }
       its(:activity) { should == "building" }
-      its(:to_json) { should == {name: "test_pipeline", status: "failed", activity: "building", triggerer: "rambo", buildBreakers: ["Tom", "Dickie Bird", "rambo", "Deeldon Lemauza"] }.to_json }
+      its(:to_json) { should == {name: "test_pipeline", status: "failed", activity: "building", label: "P2", triggerer: "rambo", buildBreakers: ["Tom", "Dickie Bird", "rambo", "Deeldon Lemauza"] }.to_json }
     end
     
     context "when stages API fails" do

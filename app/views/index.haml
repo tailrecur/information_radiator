@@ -6,10 +6,13 @@
       #outer.pipeline{"data-bind" => "css: { failed: failed }"}
         #middle{"data-bind" => "attr: { class: buildStatus }"}
           #inner{:class => "clear", "data-bind" => "text: displayName"}
-          .failure-details{"data-bind" => "if: triggered"}
+          .details
+            %span.label Label:
+            %span.label{"data-bind" => "text: label"}
+          .details{"data-bind" => "if: triggered"}
             .label Triggered by:
             %div{"data-bind" => "text: triggerer"}
-          .failure-details{"data-bind" => "if: broken"}
+          .details{"data-bind" => "if: broken"}
             .label Broken by:
             %div{"data-bind" => "foreach: buildBreakers"}
               %div{"data-bind" => "text: $data"}

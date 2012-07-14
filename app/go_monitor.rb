@@ -42,7 +42,7 @@ class GoStageBuilder
   def self.create attrs
     pipeline_name, name = attrs["name"].split(" :: ")
     id = attrs["webUrl"].match(/\/go\/pipelines\/(.+)/)[1]
-    GoStage.new(id: id, name: name, pipeline_name: pipeline_name, status: attrs["lastBuildStatus"], activity: attrs["activity"])
+    GoStage.new(id: id, name: name, pipeline_name: pipeline_name, status: attrs["lastBuildStatus"], activity: attrs["activity"], label: attrs["lastBuildLabel"])
   end
 end
 

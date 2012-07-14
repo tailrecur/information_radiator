@@ -25,9 +25,8 @@ div.pipeline {
   height: 410px;
 }
 
-.pipeline .failure-details {
+.pipeline .details {
   font-size: 30px;
-  text-align: left;
   margin-top: 20px;
   padding-left: 20px;
 }
