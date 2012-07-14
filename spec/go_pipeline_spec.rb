@@ -14,33 +14,37 @@ def pipeline(name="any", *stages)
 end
 
 describe "GoPipeline" do
+  before { http_handler.stub(:retrieve).with("/api/pipelines/test_pipeline/stages.xml").and_return(STAGES_XML) }
+  
   context "when build is green and sleeping" do
     let(:http_handler) { mock() }
     subject { pipeline("test_pipeline", stage(status: "Success"), stage(status: "Success")) }
+
     its(:status) { should == "passed" }
     its(:activity) { should == "sleeping" }
     its(:failed_stage) { should be_nil }
+    its(:to_json) { should == {name: "test_pipeline", status: "passed", activity: "sleeping" }.to_json }
   end
   
   context "when build is red and sleeping" do
     let(:http_handler) { mock() }
     let(:failed_stage) { stage(status: "Failure", name: "stage2") }
     subject { pipeline("test_pipeline", stage(status: "Success"), failed_stage) }
+
     its(:status) { should == "failed" }
     its(:activity) { should == "sleeping" }
     its(:failed_stage) { should == failed_stage }
-    
-    it "should populate build breakers" do
-      http_handler.should_receive(:retrieve).with("/api/pipelines/test_pipeline/stages.xml").and_return(STAGES_XML)
-      subject.build_breakers.should == ["Tom", "Dickie Bird", "rambo", "Deeldon Lemauza"]
-    end
+    its(:to_json) { should == {name: "test_pipeline", status: "failed", activity: "sleeping", build_breakers: ["Tom", "Dickie Bird", "rambo", "Deeldon Lemauza"] }.to_json }
   end
   
   context "when build is red and building" do
     let(:http_handler) { mock() }
-    subject { pipeline("test_pipeline", stage(status:"Success", activity: "Building"), stage(status: "Failure")) }
+    let(:failed_stage) { stage(status: "Failure", name: "stage2") }
+    subject { pipeline("test_pipeline", stage(status:"Success", activity: "Building"), failed_stage) }
+
     its(:status) { should == "failed" }
     its(:activity) { should == "building" }
+    its(:to_json) { should == {name: "test_pipeline", status: "failed", activity: "building", build_breakers: ["Tom", "Dickie Bird", "rambo", "Deeldon Lemauza"] }.to_json }
   end
 
 

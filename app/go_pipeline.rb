@@ -29,7 +29,9 @@ class GoPipeline
   end
   
   def to_json options={}
-    {name: name, status: status, activity: activity}.to_json
+    pipeline = {name: name, status: status, activity: activity}
+    pipeline[:build_breakers] = build_breakers if failed_stage
+    pipeline.to_json
   end
   
   def == other
