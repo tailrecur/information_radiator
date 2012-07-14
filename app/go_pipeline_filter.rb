@@ -1,7 +1,8 @@
 require 'go_pipeline'
 
 class GoPipelineFilter
-  def initialize inclusions, exclusions
+  def initialize http_handler, inclusions, exclusions
+    @http_handler = http_handler
     @inclusions = inclusions
     @exclusions = exclusions
   end
@@ -18,7 +19,7 @@ class GoPipelineFilter
     filtered_names = stages.map(&:pipeline_name).uniq
     filtered_names.reject! { |name| @exclusions.include?(name) }
     filtered_names.select! { |name| @inclusions.include?(name) } unless @inclusions.size == 0
-    filtered_names.map{|name| GoPipeline.new name }
+    filtered_names.map{|name| GoPipeline.new name, @http_handler }
   end
   
   def populate pipelines, stages

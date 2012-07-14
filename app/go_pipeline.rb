@@ -1,22 +1,31 @@
 require 'json'
 
+require 'nokogiri'
+
 class GoPipeline 
-  def initialize name
+  def initialize name, http_handler
     @name = name
+    @http_handler = http_handler
     @stages = []
   end
   attr_reader :stages, :name
   
-  def clear!
-    @stages = []
-  end
-  
   def status
-    stages.all?{|s| s.status == "Success"} ? "passed" : "failed"
+    stages.any?{|s| s.failed? } ? "failed" : "passed"
   end
   
   def activity 
-    stages.all?{|s| s.activity == "Sleeping"} ? "sleeping" : "building"
+    stages.any?{|s| s.building? } ? "building" : "sleeping"
+  end
+  
+  def failed_stage 
+    stages.find(&:failed?)
+  end
+  
+  def build_breakers
+    stages = Nokogiri::XML(@http_handler.retrieve("/api/pipelines/#{name}/stages.xml"))
+    failed_entry = stages.css("entry").find {|entry| entry.at("id").content.include?(failed_stage.name) }
+    failed_entry.css("author").map {|author| author.at("name").content.match(/(.+) <.*>/)[1] }
   end
   
   def to_json options={}
@@ -29,10 +38,18 @@ class GoPipeline
 end
 
 class GoStage
-  def initialize name, status, activity
-    @pipeline_name, @name = name.split(" :: ")
-    @status = status
-    @activity = activity
+  def initialize opts
+    @opts = opts
+    @id, @name, @pipeline_name = opts[:id], opts[:name], opts[:pipeline_name]
   end
-  attr_reader :pipeline_name, :name, :status, :activity
+  
+  def failed?
+    @opts[:status] == "Failure"
+  end
+  
+  def building?
+    @opts[:activity] == "Building"
+  end
+  
+  attr_reader :pipeline_name, :name, :id
 end

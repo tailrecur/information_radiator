@@ -1,13 +1,14 @@
 require 'spec_helper'
 require 'http_handler'
 require 'go_monitor'
+require 'stringio'
 
 CCTRAY_XML = <<XML
 <Projects>
-  <Project name="test_pipeline :: stage1" activity="Sleeping" lastBuildStatus="Success"></Project>
-  <Project name="test_pipeline :: stage1 :: job" activity="Sleeping" lastBuildStatus="Success"></Project>
-  <Project name="test_pipeline :: stage2" activity="Sleeping" lastBuildStatus="Success"></Project>
-  <Project name="test2_pipeline :: stage" activity="Sleeping" lastBuildStatus="Success"></Project>
+  <Project name="test_pipeline :: stage1" activity="Sleeping" lastBuildStatus="Success" webUrl="http://go.server/go/pipelines/test_pipeline/1/stage1/1"></Project>
+  <Project name="test_pipeline :: stage1 :: job" activity="Sleeping" lastBuildStatus="Success" webUrl="http://go.server/go/pipelines/test_pipeline/1/stage1/1/job"></Project>
+  <Project name="test_pipeline :: stage2" activity="Sleeping" lastBuildStatus="Success" webUrl="http://go.server/go/pipelines/test_pipeline/1/stage2/1"></Project>
+  <Project name="test2_pipeline :: stage" activity="Sleeping" lastBuildStatus="Success" webUrl="http://go.server/go/pipelines/test2_pipeline/1/stage/1"></Project>
 </Projects>
 XML
 
@@ -48,8 +49,8 @@ describe GoMonitor do
         pipelines.first.stages.size.should == 2
         pipelines.last.stages.size.should == 1
         stage = pipelines.last.stages.first
-        stage.status.should == "Success"
-        stage.activity.should == "Sleeping"
+        stage.should_not be_failed
+        stage.should_not be_building
       end
     end
     
@@ -59,6 +60,7 @@ describe GoMonitor do
         HttpHandler.should_receive(:new).with("http://go.server/go").and_return(http_handler)
         http_handler.should_receive(:auth).never
         http_handler.should_receive(:retrieve).with("/cctray.xml").and_raise(Exception.new("Connection Error"))
+        $stdout = StringIO.new
         expect { subject.refresh_data }.to raise_error("Cannot connect to GO server")
       end
     end
