@@ -3,12 +3,13 @@
     var self = this;
 
     self.options = options;
-    self.type = ko.observable("foo");
+    self.type = ko.observable("go");
+    self.errorMessage = ko.observable("");
     self.pipelines = ko.observableArray();
 
     self.poll = function() {
       Radiator.MonitorStore.findById(self.options.id, function(data) {
-        screen.clearError();
+        self.errorMessage("");
         _(data).each(function(pipeline) {
           var existing_pipeline = _(self.pipelines()).find(function(p) { return p.name() == pipeline.name; });
           if(existing_pipeline) {
@@ -17,7 +18,9 @@
             self.pipelines.push(new Radiator.Pipeline(pipeline));
           }
         });
-      }, screen.showError);
+      }, function(error) {
+        self.errorMessage(error.message);
+      });
     }
 
     self.start = function() {
@@ -28,6 +31,7 @@
     return {
       start: self.start,
       pipelines: self.pipelines,
+      errorMessage: self.errorMessage,
     }
   };
 })(jQuery);

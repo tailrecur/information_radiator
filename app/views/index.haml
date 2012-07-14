@@ -1,5 +1,6 @@
 #screen
-  .error-message{"data-bind" => "text: errorMessage"}
+  .error-message{"data-bind" => "foreach: errorMessages"}
+    %div{"data-bind" => "text: $data"}
   %div{"data-bind" => "foreach: monitors"}
     %div{"data-bind" => "foreach: pipelines"}
       #outer.pipeline{"data-bind" => "css: { broken: status() === 'failed' }"}

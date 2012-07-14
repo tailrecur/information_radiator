@@ -2,16 +2,10 @@
   Radiator.Screen = function() {
     var self = this;
     
-    self.errorMessage = ko.observable();
     self.monitors = ko.observableArray();    
-    
-    self.showError = function(data) {
-      self.errorMessage(data.message);
-    }
-    
-    self.clearError = function() {
-      self.errorMessage("");
-    }
+    self.errorMessages = ko.computed(function() {
+      return _(self.monitors()).map(function(m) { return m.errorMessage(); });
+    });
     
     self.display = function() {
       Radiator.MonitorStore.all(function(data) {
@@ -20,7 +14,7 @@
           self.monitors.push(monitor);
           monitor.start();
         });
-      }, self.showError);
+      });
     }
 
     return self;
@@ -30,8 +24,5 @@
 jQuery(function() {
   screen = new Radiator.Screen();
   ko.applyBindings(screen, $('#screen')[0]);
-  $("#container").ajaxError(function(e, jqxhr, settings, exception) {
-    console.log("ajaxError");
-  });
   screen.display();
 });

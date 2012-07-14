@@ -11,6 +11,6 @@ class HttpHandler
   end
   
   def retrieve uri
-    HTTParty.get(@base_url + uri, basic_auth: @auth, timeout: 15)
+    HTTParty.get(@base_url + uri, basic_auth: @auth, timeout: 3)
   end
 end
