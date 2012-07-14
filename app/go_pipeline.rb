@@ -41,6 +41,10 @@ class GoPipeline
     other.is_a?(GoPipeline) and self.name == other.name
   end
   
+  def <=> other
+    self.label <=> other.label
+  end
+  
   def refresh_data
     begin
       stage_entries = Nokogiri::XML(@http_handler.retrieve("/api/pipelines/#{name}/stages.xml")).css("entry").map{|entry| GoStageEntry.new(entry) }

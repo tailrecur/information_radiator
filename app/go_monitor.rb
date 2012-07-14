@@ -13,7 +13,7 @@ class GoMonitor
 
   def refresh_data
     begin
-      pipelines = filter_pipelines(Nokogiri::XML(@http_handler.retrieve("/cctray.xml")))
+      pipelines = filter_pipelines(Nokogiri::XML(@http_handler.retrieve("/cctray.xml"))).sort
       pipelines.each(&:refresh_data)
     rescue Exception => e
       puts e.message
