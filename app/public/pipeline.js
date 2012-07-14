@@ -3,6 +3,7 @@ Radiator.Pipeline = function(options) {
   
   self.name = ko.observable(options.name);
   self.status = ko.observable(options.status);
+  self.triggerer = ko.observable(options.triggerer);
   self.activity = ko.observable(options.activity);
   self.buildBreakers = ko.observableArray(options.buildBreakers);
   self.displayName = ko.computed(function() {
@@ -13,6 +14,12 @@ Radiator.Pipeline = function(options) {
   });
   self.failed = ko.computed(function() {
     return self.status() == "failed";
+  });
+  self.triggered = ko.computed(function() {
+    return self.triggerer() != null;
+  });
+  self.broken = ko.computed(function() {
+    return self.failed() && !self.triggered();
   });
 
   self.refresh = function(data) {

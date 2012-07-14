@@ -36,15 +36,19 @@ class GoPipeline
   end
   
   def refresh_data
-    stage_entries = Nokogiri::XML(@http_handler.retrieve("/api/pipelines/#{name}/stages.xml")).css("entry").map{|entry| GoStageEntry.new(entry)}
-    stages.each { |stage| stage.entry = stage_entries.find{|entry| entry.id == stage.id } }
+    begin
+      stage_entries = Nokogiri::XML(@http_handler.retrieve("/api/pipelines/#{name}/stages.xml")).css("entry").map{|entry| GoStageEntry.new(entry) }
+      stages.each { |stage| stage.entry = stage_entries.find{|entry| entry.id == stage.id } }
+    rescue Exception => e
+      stages.each{ |stage| stage.entry = GoStageEntry.new(nil) }
+    end
   end
 end
 
 class GoStageEntry 
   def initialize entry
-    @id = entry.at("id").content.match(/\/go\/pipelines\/(.+)/)[1]
-    @authors = entry.css("author").map {|author| author.at("name").content.match(/(.+) <.*>/)[1] }
+    @id = entry.at("id").content.match(/\/go\/pipelines\/(.+)/)[1] rescue nil
+    @authors = entry.css("author").map {|author| author.at("name").content.match(/(.+) <.*>/)[1] } rescue []
     @triggerer = entry.to_s.match(/<go:name><!\[CDATA\[(.*)\]\]><\/go:name>/)[1] rescue nil
   end
   

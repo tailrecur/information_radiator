@@ -48,7 +48,20 @@ describe "GoPipeline" do
       its(:activity) { should == "building" }
       its(:to_json) { should == {name: "test_pipeline", status: "failed", activity: "building", triggerer: "rambo", buildBreakers: ["Tom", "Dickie Bird", "rambo", "Deeldon Lemauza"] }.to_json }
     end
+    
+    context "when stages API fails" do
+      before { http_handler.stub(:retrieve).with("/api/pipelines/test_pipeline/stages.xml").and_raise(Exception.new("some error")) }
+      let(:failed_stage) { stage(status: "Failure", name: "stage2") }
+      subject { pipeline("test_pipeline", stage(status: "Success"), failed_stage) }
+      before{ subject.refresh_data }
+      
+      its(:status) { should == "failed" }
+      its(:activity) { should == "sleeping" }
+      its(:failed_stage) { should == failed_stage }
+      # its(:to_json) { should == {name: "test_pipeline", status: "failed", activity: "sleeping", triggerer: nil, buildBreakers: [] }.to_json }
+    end
   end
+  
 
 STAGES_XML = <<-STAGE
 <feed xmlns="http://www.w3.org/2005/Atom" xmlns:go="http://www.thoughtworks-studios.com/ns/go">
