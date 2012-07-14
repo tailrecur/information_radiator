@@ -15,6 +15,8 @@ class GoMonitor
     begin
       parse_data(Nokogiri::XML(@http_handler.retrieve("/cctray.xml")))
     rescue Exception => e
+      puts e.message
+      puts e.backtrace.join("\n")
       raise "Cannot connect to GO server"
     end
   end

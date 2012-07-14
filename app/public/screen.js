@@ -9,6 +9,10 @@
       self.errorMessage(data.message);
     }
     
+    self.clearError = function() {
+      self.errorMessage("");
+    }
+    
     self.display = function() {
       Radiator.MonitorStore.all(function(data) {
         _(data).each(function(monitorData, index) {
