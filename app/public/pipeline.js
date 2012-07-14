@@ -2,11 +2,12 @@ Radiator.Pipeline = function(options) {
   var self = this;
   
   self.name = ko.observable(options.name);
-  self.status = ko.observable(options.status);
   self.label = ko.observable(options.label);
-  self.triggerer = ko.observable(options.triggerer);
+  self.status = ko.observable(options.status);
   self.activity = ko.observable(options.activity);
-  self.buildBreakers = ko.observableArray(options.buildBreakers);
+  self.triggerer = ko.observable(options.triggerer);
+  self.buildBreakers = ko.observableArray(options.buildBreakers || []);
+  
   self.displayName = ko.computed(function() {
      return self.name().replace(/_/g," ").replace(/-/g," ");
   });
@@ -24,8 +25,12 @@ Radiator.Pipeline = function(options) {
   });
 
   self.refresh = function(data) {
+    self.label(data.label);
     self.status(data.status);
     self.activity(data.activity);
+    self.triggerer(data.triggerer);
+    self.buildBreakers.removeAll();
+    _(data.buildBreakers).each(function(breaker) { self.buildBreakers.push(breaker); });
   };
   
   return self;

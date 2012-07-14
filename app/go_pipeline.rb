@@ -29,6 +29,8 @@ class GoPipeline
   def to_json options={}
     pipeline = {name: name, status: status, activity: activity, label: label}
     if failed_stage
+      puts name
+      puts stages
       pipeline[:triggerer] = stages.map(&:triggerer).uniq.compact.first
       pipeline[:buildBreakers] = failed_stage.authors
     end
@@ -42,8 +44,14 @@ class GoPipeline
   def refresh_data
     begin
       stage_entries = Nokogiri::XML(@http_handler.retrieve("/api/pipelines/#{name}/stages.xml")).css("entry").map{|entry| GoStageEntry.new(entry) }
-      stages.each { |stage| stage.entry = stage_entries.find{|entry| entry.id == stage.id } }
+      stages.each do |stage| 
+        stage.entry = stage_entries.find{|entry| entry.id == stage.id } 
+        stage.entry = GoStageEntry.new(nil) unless stage.entry
+      end
     rescue Exception => e
+      puts "Pipeline: #{name}"
+      puts e.message
+      puts e.backtrace.join("\n")
       stages.each{ |stage| stage.entry = GoStageEntry.new(nil) }
     end
   end
@@ -84,5 +92,5 @@ class GoStage
   extend Forwardable
   def_delegators :@entry, :triggerer, :authors
   
-  attr_reader :pipeline_name, :name, :id, :label
+  attr_reader :pipeline_name, :name, :id, :label, :entry
 end
