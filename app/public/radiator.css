@@ -48,23 +48,23 @@ div.pipeline {
 }
 
 .passed-sleeping {
-  background-image: linear-gradient(bottom, #589949 2%, #41D141 51%, #53B844 76%);
-  background-image: -webkit-linear-gradient(bottom, #589949 2%, #41D141 51%, #53B844 76%);
+  background-image: linear-gradient(top, #589949 2%, #41D141 51%, #53B844 76%);
+  background-image: -webkit-linear-gradient(top, #589949 2%, #41D141 51%, #53B844 76%);
 }
 
 .passed-building {
-  background-image: linear-gradient(bottom, #C9CF27 2%, #F9FF52 51%, #F5F51B 76%);
-  background-image: -webkit-linear-gradient(bottom, #C9CF27 2%, #F9FF52 51%, #F5F51B 76%);
+  background-image: linear-gradient(top, #C9CF27 2%, #F9FF52 51%, #F5F51B 76%);
+  background-image: -webkit-linear-gradient(top, #C9CF27 2%, #F9FF52 51%, #F5F51B 76%);
 }
 
 .failed-sleeping {
-  background-image: linear-gradient(bottom, #421616 9%, #990F0F 55%, #A30000 78%);
-  background-image: -webkit-linear-gradient(bottom, #421616 9%, #990F0F 55%, #A30000 78%);
+  background-image: linear-gradient(top, #421616 9%, #990F0F 55%, #A30000 78%);
+  background-image: -webkit-linear-gradient(top, #421616 9%, #990F0F 55%, #A30000 78%);
 }
 
 .failed-building {
-  background-image: linear-gradient(bottom, #A83939 2%, #E81212 51%, #CC1212 76%);
-  background-image: -webkit-linear-gradient(bottom, #A83939 2%, #E81212 51%, #CC1212 76%);
+  background-image: linear-gradient(top, #A83939 2%, #E81212 51%, #CC1212 76%);
+  background-image: -webkit-linear-gradient(top, #A83939 2%, #E81212 51%, #CC1212 76%);
 }
 
 .clear {
