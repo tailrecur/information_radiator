@@ -27,6 +27,22 @@ describe GoPipelineFilter do
       pipelines.last.stages.map(&:name).should == ["stage"]
     end
   end
+  
+  context "when exclusions are regexes" do
+    it "should return everything except exclusions" do
+      filter = GoPipelineFilter.new(nil, [], ["/.*baz.*/"])
+      pipelines = filter.apply([stage("foo", "stage"), stage("foo", "stage2"), stage("baz", "bar_stage"), stage("bar", "bar_stage"), stage("2baz", "stage")])
+      pipelines.map(&:name).should == ["foo", "bar"]
+    end
+  end
+  
+  context "when inclusions are regexes" do
+    it "should return everything except exclusions" do
+      filter = GoPipelineFilter.new(nil, ["/.*baz.*/"], [])
+      pipelines = filter.apply([stage("foo", "stage"), stage("foo", "stage2"), stage("baz", "bar_stage"), stage("bar", "bar_stage"), stage("2baz", "stage")])
+      pipelines.map(&:name).should == ["baz", "2baz"]
+    end
+  end
 end
   
   

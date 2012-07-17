@@ -5,7 +5,7 @@
     %div{"data-bind" => "foreach: pipelines"}
       #outer.pipeline{"data-bind" => "css: { failed: failed }"}
         #middle{"data-bind" => "attr: { class: buildStatus }"}
-          #inner{:class => "clear", "data-bind" => "text: displayName"}
+          #inner.clear{"data-bind" => "text: displayName"}
           .details
             %span.label Label:
             %span.label{"data-bind" => "text: label"}

@@ -8,20 +8,21 @@ body {
 }
 
 div.pipeline {
-  font-size: 46px;
+  font-size: 50px;
   font-weight: bold;
   float: left;
   width: 33%;
-  color: black;
   border: 3px solid black;
-  border-radius: 10px;
+  border-radius: 20px;
   text-align: center;
   vertical-align: middle;
   margin: 2px;
+  color: #222;
+  text-shadow: 0px 2px 3px #ddd;
 }
 
 #outer.pipeline.failed {
-  font-size: 60px;
+  font-size: 64px;
   height: 410px;
 }
 
@@ -47,19 +48,23 @@ div.pipeline {
 }
 
 .passed-sleeping {
-  background-color: green;
+  background-image: linear-gradient(bottom, #589949 2%, #41D141 51%, #53B844 76%);
+  background-image: -webkit-linear-gradient(bottom, #589949 2%, #41D141 51%, #53B844 76%);
 }
 
 .passed-building {
-  background-color: yellow;
+  background-image: linear-gradient(bottom, #C9CF27 2%, #F9FF52 51%, #F5F51B 76%);
+  background-image: -webkit-linear-gradient(bottom, #C9CF27 2%, #F9FF52 51%, #F5F51B 76%);
 }
 
 .failed-sleeping {
-  background-color: #C11B17;
+  background-image: linear-gradient(bottom, #421616 9%, #990F0F 55%, #A30000 78%);
+  background-image: -webkit-linear-gradient(bottom, #421616 9%, #990F0F 55%, #A30000 78%);
 }
 
 .failed-building {
-  background-color: #FF6103;
+  background-image: linear-gradient(bottom, #A83939 2%, #E81212 51%, #CC1212 76%);
+  background-image: -webkit-linear-gradient(bottom, #A83939 2%, #E81212 51%, #CC1212 76%);
 }
 
 .clear {

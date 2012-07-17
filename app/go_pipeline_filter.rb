@@ -17,8 +17,10 @@ class GoPipelineFilter
   
   def filter stages
     filtered_names = stages.map(&:pipeline_name).uniq
-    filtered_names.reject! { |name| @exclusions.include?(name) }
-    filtered_names.select! { |name| @inclusions.include?(name) } unless @inclusions.size == 0
+    filtered_names.reject! { |name| @exclusions.any? { |exclusion| exclusion.match(/\/(.*)\//) ? name.match(Regexp.new($1)) : exclusion == name }}
+    if @inclusions.size > 0
+      filtered_names.select! { |name| @inclusions.any? { |inclusion| inclusion.match(/\/(.*)\//) ? name.match(Regexp.new($1)) : inclusion == name }}
+    end
     filtered_names.map{|name| GoPipeline.new name, @http_handler }
   end
   
