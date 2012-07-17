@@ -4,36 +4,35 @@ html,body {
 
 body {
   margin: 0px;
-  font-family: Nevis,Verdana,Helvetica,sans-serif;
+  font-family: Helvetica,Gill Sans,Calibri, sans-serif;
 }
 
 div.pipeline {
-  font-size: 50px;
+  font-size: 60px;
   font-weight: bold;
   float: left;
   width: 33%;
   border: 3px solid black;
-  border-radius: 20px;
+  border-radius: 30px;
   text-align: center;
   vertical-align: middle;
   margin: 2px;
-  color: #222;
-  text-shadow: 0px 2px 3px #ddd;
+  color: #FFFED7;
 }
 
 #outer.pipeline.failed {
-  font-size: 64px;
-  height: 410px;
+  font-size: 75px;
+  height: 510px;
 }
 
 .pipeline .details {
-  font-size: 30px;
+  font-size: 50px;
   margin-top: 20px;
   padding-left: 20px;
 }
 
 #outer {
-  height: 200px;
+  height: 250px;
   overflow: hidden;
   position: relative;
 }
@@ -48,23 +47,20 @@ div.pipeline {
 }
 
 .passed-sleeping {
-  background-image: linear-gradient(top, #589949 2%, #41D141 51%, #53B844 76%);
-  background-image: -webkit-linear-gradient(top, #589949 2%, #41D141 51%, #53B844 76%);
+  background-color: #276B00;;
 }
 
 .passed-building {
-  background-image: linear-gradient(top, #C9CF27 2%, #F9FF52 51%, #F5F51B 76%);
-  background-image: -webkit-linear-gradient(top, #C9CF27 2%, #F9FF52 51%, #F5F51B 76%);
+  background-color: #FFFF18;
+  color: #4A2F27;
 }
 
 .failed-sleeping {
-  background-image: linear-gradient(top, #421616 9%, #990F0F 55%, #A30000 78%);
-  background-image: -webkit-linear-gradient(top, #421616 9%, #990F0F 55%, #A30000 78%);
+  background-color: #B30400;
 }
 
 .failed-building {
-  background-image: linear-gradient(top, #A83939 2%, #E81212 51%, #CC1212 76%);
-  background-image: -webkit-linear-gradient(top, #A83939 2%, #E81212 51%, #CC1212 76%);
+  background-color: #FF6400;
 }
 
 .clear {
