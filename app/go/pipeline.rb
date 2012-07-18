@@ -29,8 +29,6 @@ class GoPipeline
   def to_json options={}
     pipeline = {name: name, status: status, activity: activity, label: label}
     if failed_stage
-      puts name
-      puts stages
       pipeline[:triggerer] = stages.map(&:triggerer).uniq.compact.first
       pipeline[:buildBreakers] = failed_stage.authors
     end

@@ -1,5 +1,6 @@
 require 'spec_helper'
-require 'go_pipeline'
+require 'go/pipeline'
+require 'stringio'
 
 describe "GoPipeline" do
   
@@ -50,6 +51,7 @@ describe "GoPipeline" do
     end
     
     context "when stages API fails" do
+      before { $stdout = StringIO.new }
       before { http_handler.stub(:retrieve).with("/api/pipelines/test_pipeline/stages.xml").and_raise(Exception.new("some error")) }
       let(:failed_stage) { stage(status: "Failure", name: "stage2") }
       subject { pipeline("test_pipeline", stage(status: "Success"), failed_stage) }

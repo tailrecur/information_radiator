@@ -1,6 +1,6 @@
 require 'spec_helper'
 require 'http_handler'
-require 'go_monitor'
+require 'go/monitor'
 require 'stringio'
 
 CCTRAY_XML = <<XML

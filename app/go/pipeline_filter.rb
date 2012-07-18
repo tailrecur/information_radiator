@@ -1,4 +1,4 @@
-require 'go_pipeline'
+require 'go/pipeline'
 
 class GoPipelineFilter
   def initialize http_handler, inclusions, exclusions

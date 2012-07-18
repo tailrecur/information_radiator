@@ -1,6 +1,6 @@
 require 'spec_helper'
-require 'go_pipeline'
-require 'go_pipeline_orderer'
+require 'go/pipeline'
+require 'go/pipeline_orderer'
 
 describe "GoPipelineOrderer" do
   def pipelines(*names)

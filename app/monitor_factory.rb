@@ -1,4 +1,4 @@
-require 'go_monitor'
+require 'go/monitor'
 
 class MonitorFactory
   def self.create hashie

@@ -1,6 +1,6 @@
 require 'spec_helper'
-require 'go_pipeline_filter'
-require 'go_pipeline'
+require 'go/pipeline_filter'
+require 'go/pipeline'
 
 describe GoPipelineFilter do
   

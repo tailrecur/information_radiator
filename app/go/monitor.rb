@@ -1,7 +1,7 @@
 require 'nokogiri'
 require 'http_handler'
-require 'go_pipeline_filter'
-require 'go_pipeline_orderer'
+require 'go/pipeline_filter'
+require 'go/pipeline_orderer'
 
 class GoMonitor
   def initialize hashie
